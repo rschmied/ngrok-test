@@ -28,7 +28,15 @@ jobs:
     - name: install ngrok
       env:
         URL: ${{ secrets.NGROK_URL }}
+      # if: ${{ env.URL != '' }}
       run: |
-        bash -c set
-        curl -sk ${URL}/api/v0/system_information
+        [ "1" = "2" ] && echo "no"
+        [ "1" = "1" ] && echo "yes"
+        echo "action_state=yellow" >> $GITHUB_ENV
+        echo "$action_state"
+        if [ -n "$URL" ]; then
+           curl -sk ${URL}/api/v0/system_information
+        fi
+    - name: print env
+      run: bash -c 'echo "hello"; set'
 
